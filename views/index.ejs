@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Csv Editor</title>
+        <link rel="stylesheet" href="/assets/css/index.css">
+    </head>
+    <body>
+
+        <form action="/api/v1/files/Uploads" method="POST" enctype="multipart/form-data" onsubmit="return formValidate(this);">
+            <input type="file" accept=".csv" placeholder="Upload" name="csv" id="csvFile">
+            <input type="submit" value="upload">
+        </form>
+        <div>
+            <%for(let csv of csvFiles){%>
+            <div class="item" id="<%=csv.id%>">
+                <a href="/<%=csv.id%>"><%=csv.filename%></a>
+            </div>
+            <%}%>
+        </div>
+        <script src="/assets/js/index.js"></script>
+    </body>
+</html>

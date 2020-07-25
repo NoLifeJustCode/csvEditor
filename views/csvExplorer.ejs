@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Csv Explorer</title>
+        <link rel="stylesheet" href="/assets/css/csvStyle.css">
+    </head>
+<body>
+    <div class="container">
+    <h2 style="text-align: center;"><%=csv.filename%></h2>
+    <div class="filters">
+        <input type="text" id="searchInput" >
+        <div class="dropdown">
+            <div class="icon" id="filterImg"><img src="https://www.flaticon.com/premium-icon/icons/svg/2985/2985087.svg" alt=""></div>
+            <form action="" class="dropdown-content" id="dropdown">
+                <select name="filter" id="filter" >
+                   
+                </select>
+                
+                <h5>Search type</h5>
+                <div class="radio-input">
+
+                <input type="radio" name="search-type" id="exclude"/>
+                <label for="exclude">Exclude</label>
+                </div>
+                <div class="radio-input">
+                <input type="radio"  name="search-type" id="include"  checked/>
+                <label for="Include" >Include</label>
+                </div>
+                <button id="reset">reset</button>
+            </form>
+        </div>
+        <button id="search">Search</button>
+    </div>
+    <table id="<%=csv.id%>">
+    
+        
+
+    </table>
+    <div class="nav">
+        <button id="prev">&lt;&lt;</button> 
+        <select name="limit" id="limit">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        <button id="next">&gt;&gt;</button>
+</div>
+    </div>
+    <script src="/assets/js/csv.js"></script>
+</body>
+</html>
