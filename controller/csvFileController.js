@@ -6,9 +6,9 @@ const fastCsv=require('fast-csv')
  * renders the home page
  */
 module.exports.home=async (req,res)=>{
-    console.log('home')
+    
     let csv= await csvFiles.find().exec()
-    console.log(csv)
+    
     return res.render('index',{
         csvFiles:csv
     })
@@ -17,12 +17,15 @@ module.exports.home=async (req,res)=>{
  * creates a file record in db to match with the filename stored in the userUploads
  */
 module.exports.uploadFile=async(req,res)=>{
-    
+    try{
     await csvFiles.create({
         filename:req.file.originalname,
         filePath:'./uploads/'+req.file.filename
     })
     return res.redirect('back')
+    }catch(e){
+        console.log(e.message)
+    }
 }
 /**
  * get paginated result of a file
@@ -35,9 +38,9 @@ module.exports.getRows=async(req,res)=>{
     
         let startIndex=(page-1)*limit;
         let endIndex=(page*limit);
-        console.log(startIndex,endIndex,limit,page)
+        
         let file=await csvFiles.findById(id).exec();
-        console.log(file)
+        
         let csvData=[]
         await fastCsv.parseFile(path.join(__dirname,'../',file.filePath),{
                         headers:true,
@@ -65,7 +68,7 @@ module.exports.getRows=async(req,res)=>{
         
         
     }catch(e){
-        console.log(e)
+       
         return res.status(500).send({message:e.message})
     }
 }
@@ -73,6 +76,12 @@ module.exports.getRows=async(req,res)=>{
  * retreive the csv file viewer
  */
 module.exports.getCsvExplorer=async function(req,res){
+    try{
+   
     let csv=await csvFiles.findById(req.params.id);
     return res.render('csvExplorer',{csv})
+    }catch(e){
+        console.log(e.message)
+        return res.send("Invalid file ")
+    }
 }

@@ -72,7 +72,7 @@ class CsvEditor{
                     let ans=this.searchExactCase(item,key,filter);
                     return include?ans:!ans;            
         }))
-        console.log('data',data)
+      
         this.view=data;
     }
     /**
@@ -92,10 +92,11 @@ class CsvEditor{
      * Get next paginated result
      */
     next=async()=>{
-        if(!this.data.next)
-            return;
-            this.data=await this.fetchResource(next);
-            this.view=this.data.data;
+     
+        this.data=await this.fetchResource(this.data.next);
+        
+        this.view=this.data.data;
+       
         return;
     }
     /**
@@ -122,8 +123,9 @@ class CsvEditor{
     /**
      * fetch resource from specified url
      * @param {*} url 
-     */
+     */ 
     async fetchResource(url){
+       
         return await fetch(url)
              .then(response=>response.json())
              .catch(e=>console.log(e))
@@ -226,7 +228,7 @@ class csvView extends CsvEditor{
      */
     sortEventHandler(filter){
       
-            console.log(filter)
+          
             if(this.sortFilter.filter!=filter){
                 this.sortFilter={
                     filter,
@@ -264,7 +266,7 @@ class csvView extends CsvEditor{
                 e.preventDefault()
                 e.stopPropagation()
                 this.view=this.data.data;
-                console.log(this.view)
+               
                 this.render();
             })
             return ;
@@ -282,8 +284,8 @@ class csvView extends CsvEditor{
         if(key=='')
             return;
         this.search(key,filterBy,include);
-       //console.log(this)
-        console.log(filterBy,include);
+       
+    
         this.render()
     }
     /**
@@ -298,7 +300,7 @@ class csvView extends CsvEditor{
      * nav handler to navigate to next or prev resource
      */
     prevHandler=async (e)=>{
-            console.log('prev')
+          
             await this.prev();
             this.render();
     }
@@ -311,5 +313,5 @@ let csv=null;
 window.onload=async(e)=>{
     csv=new csvView()
     await csv.init();
-    console.log(csv)
+   
 }
